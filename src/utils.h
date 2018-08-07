@@ -17,6 +17,6 @@
 #define ACCESS_ONCE(x) (*(volatile typeof(x) *)&(x))
 
 
-#define sl_debug(fmt, args ...)	 do {fprintf(stderr, fmt, ##args);} while (0)
+//#define sl_debug(fmt, args ...)	 do {fprintf(stderr, fmt, ##args);} while (0)
 //#define sl_debug(fmt, args ...) do{}while(0)
 #endif
