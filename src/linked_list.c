@@ -77,7 +77,7 @@ retry:
 int ll_insert(struct linked_list* ll, int tid, int key) {
     struct hp_item* hp = ll->HP[tid];
     if (hp == NULL) {
-	hp = hp_item_setup(ll, tid);
+		hp = hp_item_setup(ll, tid);
     }
     //struct ll_node* head = &(ll->ll_head);
     while (1) {
@@ -111,7 +111,7 @@ int ll_insert(struct linked_list* ll, int tid, int key) {
 int ll_remove(struct linked_list* ll, int tid, int key) {
     struct hp_item* hp = ll->HP[tid];
     if (hp == NULL) {
-	hp = hp_item_setup(ll, tid);
+		hp = hp_item_setup(ll, tid);
     }
     //struct ll_node* head = &(ll->ll_head);
     struct ll_node *pred = NULL;

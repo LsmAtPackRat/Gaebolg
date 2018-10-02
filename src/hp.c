@@ -8,20 +8,20 @@ extern int node_count;
 
 //当每个thread开始时，主动调用hp_item_setup来建立自己与hp相关的结构
 struct hp_item* hp_item_setup(struct skiplist* sl, int tid) {
-        while (1) {
-            unsigned int hp_H = sl->count_of_hp;  //How many hps are there in the system.
-            //every time there comes a new thread, increase (HP_K * MAXLEVELS) hps in the system.
-            unsigned int old_H = SYNC_CAS(&sl->count_of_hp, hp_H, hp_H + HP_K * MAX_LEVELS);  
-            if (old_H == hp_H) 
-                break;  //success to increment hp_list->d_count.
-        }
+    while (1) {
+        unsigned int hp_H = sl->count_of_hp;  //How many hps are there in the system.
+        //every time there comes a new thread, increase (HP_K * MAXLEVELS) hps in the system.
+        unsigned int old_H = SYNC_CAS(&sl->count_of_hp, hp_H, hp_H + HP_K * MAX_LEVELS);  
+        if (old_H == hp_H) 
+            break;  //success to increment hp_list->d_count.
+    }
         
 	struct hp_item* item = (struct hp_item*)malloc(sizeof(struct hp_item));
-        //memset(item, 0, sizeof(struct hp_item));
+    //memset(item, 0, sizeof(struct hp_item));
 	item->d_list = (struct hp_rnode *)malloc(sizeof(struct hp_rnode));  //item->d_list is a head node.
-        item->d_list->next = NULL;  //important.
+    item->d_list->next = NULL;  //important.
 	
-        sl->HP[tid] = item;
+    sl->HP[tid] = item;
 	return item;
 }
 
@@ -103,7 +103,7 @@ unsigned int hp_R(unsigned int R) {
 void hp_retire_hp_item(struct skiplist* sl, int tid) {
     struct hp_item* hp = sl->HP[tid];
     if (hp == NULL) 
-	return;
+	   return;
 
     struct hp_rnode* rnode = hp->d_list->next;
     while (rnode) {

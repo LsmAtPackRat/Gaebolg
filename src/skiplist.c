@@ -182,9 +182,9 @@ find_retry:
 					sl_debug("thread-%lx physical remove node %p at level %d, and it's pred was %p.\n", pthread_self(), curr, level, pred);
 					//物理移除curr成功，但是这仅仅是一个level上的，调整一下curr的引用计数
 					int ref_counter = SYNC_SUB(&curr->ref_counter, 1);
-                        if (ref_counter < 0) {
-                            printf("dddddd ref_counter = %d.\n", ref_counter);
-                        }
+                    if (ref_counter < 0) {
+                        printf("dddddd ref_counter = %d.\n", ref_counter);
+                    }
 					if (ref_counter == 0) {
 						//此时这个节点已经可以使用hp_retire_node移除了，带GC机制的free(curr);
                         sl_debug("refcounter is zero, now retire.\n");
@@ -330,7 +330,7 @@ int sl_remove(struct skiplist *sl, map_key_t key, int verbose, int tid)
 {
     struct hp_item* hp = sl->HP[tid];
     if (hp == NULL) {
-	hp = hp_item_setup(sl, tid);
+	   hp = hp_item_setup(sl, tid);
     }
 
 	markable_t old_next;
@@ -343,7 +343,7 @@ int sl_remove(struct skiplist *sl, map_key_t key, int verbose, int tid)
 	markable_t next;
 	if (item == NULL) {
 		sl_debug("thread-%lx sl_remove(): doesn't found the node to remove in the skiplist.\n", pthread_self());
-                hp_clear_all_addr(hp);
+        hp_clear_all_addr(hp);
 		return -E_KEY_NOT_EXIST;
 	}
 	sl_debug("thread-%lx sl_remove(): found the item: %p [%lu,%lu] to remove in the skiplist!\n", pthread_self(), item, item->key.start, item->key.end);
